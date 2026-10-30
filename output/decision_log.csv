@@ -1,0 +1,10 @@
+table,issue,decision,reason
+patients,exact duplicate rows,Keep the first copy of each exact duplicate.,Identical rows repeat the same patient record.
+patients,gender spellings that are not a code,"Map known spellings to F, M, or X; leave unknown values missing.","Different spellings represent the same category, while unknown values provide no recorded gender."
+patients,site codes needing normalization,Uppercase site codes and remove spaces and hyphens.,Consistent codes allow registry records to match the site directory.
+patients,birth_year sentinel 9999,Replace 9999 with missing and use nullable Int64.,The value 9999 means the birth year was not recorded.
+visits,weight column named wt_kg in visits_south.csv,Rename wt_kg to weight_kg before stacking.,Both columns contain weight in kilograms and belong in one column.
+visits,sbp sentinel 999 and readings outside 70 through 250,Keep readings from 70 through 250 inclusive and replace other values with missing.,"The sentinel means not measured, and values outside this range fail the assignment's rule."
+visits,impossible and loosely written visit dates,Accept only exact YYYY-MM-DD text representing a real date; otherwise use NaT.,This prevents invalid or loosely formatted dates from being silently accepted.
+visits,repeated patient_id and visit pairs,Keep the reading with the later visit_time for each patient and visit.,"These rows are rechecks, and the required analysis uses the later reading."
+sites,repeated site_code rows,Keep only current site records when building sites_current in Task 4.2.,Retired versions would duplicate site matches and could multiply joined rows.
